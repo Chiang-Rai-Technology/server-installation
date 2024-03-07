@@ -2,8 +2,7 @@
 
 # update & upgrade 
 sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y dist-upgrade
+#sudo apt-get -y upgrade
 sudo apt-get -y autoremove
 
 #Install Thai language
@@ -19,9 +18,16 @@ sudo apt-get install -y nginx
 sudo apt-get install -y curl
 
 #install NodeJS
-curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo apt-get install -y build-essential
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+
+NODE_MAJOR=20
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
+sudo apt-get update
+sudo apt-get install nodejs -y
 
 #Install PM2
 sudo npm install -y pm2@latest -g
@@ -42,5 +48,5 @@ pm2 set pm2-logrotate:rotateInterval '0 0 * * *'
 sudo apt-get install -y git
 
 #Auto clean
-apt-get autoclean
-apt-get autoremove
+apt-get autoclean -y
+apt-get autoremove -y
